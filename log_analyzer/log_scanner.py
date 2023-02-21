@@ -1,9 +1,18 @@
 import os
 import magic
+import tarfile
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import TruncatedSVD
 from sklearn.pipeline import make_pipeline
 from sklearn.ensemble import IsolationForest
+
+# from Log_Pattern_Generator.log_analyzer.anomaly_writer import write_anomalies_to_file
+# from Log_Pattern_Generator.log_analyzer.pattern_matcher import create_pipeline, predict_anomalies, train_pipeline
+# from Log_Pattern_Generator.log_analyzer.pattern_writer import write_patterns_to_file
+from anomaly_writer import write_anomalies_to_file
+from pattern_matcher import create_pipeline, predict_anomalies, train_pipeline
+from pattern_writer import write_patterns_to_file
+
 
 def process_log_file(log_file, pipeline):
     if log_file.endswith('.tgz'):
@@ -43,12 +52,14 @@ def process_log_file(log_file, pipeline):
 
     return messages, anomalies, anomaly_indices, observed_messages
 
+
 def create_output_dir(log_dir):
     output_dir = os.path.join(log_dir, 'Log_Patterns')
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
         print(f'Created {output_dir}')
     return output_dir
+
 
 def scan_logs_for_patterns():
     # Prompt the user to input the directory where the log files are located
