@@ -5,6 +5,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.ensemble import IsolationForest
 import pickle
 
+
 def create_pipeline(log_file=None):
     # Create a TfidfVectorizer and a TruncatedSVD transformer to reduce the dimensionality of the data
     vectorizer = TfidfVectorizer(max_features=8, min_df=1, stop_words='english')
@@ -49,6 +50,7 @@ def train_pipeline(pipeline, messages):
         return None
 
     return pipeline
+
 
 def predict_anomalies(pipeline, messages):
     anomaly_scores = pipeline.decision_function(messages)
